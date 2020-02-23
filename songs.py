@@ -3,11 +3,13 @@ import requests
 from requests.exceptions import RequestException
 import re
 import pandas
+import functions as func
 
 
 class Songs:
     def __init__(self):
         # 初始歌单
+        self.list_title = ''
         self.songs = {}
         self.songs['id'] = []
         self.songs['name'] = []
@@ -16,40 +18,25 @@ class Songs:
 
     def get_plist(self, url):
         # 建立歌单:name与url
-        content = self.get_page(url).text
+        content = func.get_page(url).text
         # 新建bs对象
         soup = BeautifulSoup(content, 'lxml')
         plist = soup.find(name='ul',
                           attrs={'class': 'f-hide'})
-
+        self.list_title = soup.find(name='h2', class_='f-ff2').string
         # 筛选数据
         for song in plist.find_all(name='li'):
+
             # id
             id = re.search('=([0-9]+)', song.a['href'])
             self.songs['id'].append(id.group(1))
-            # title
+            # name
             song_name = song.a.string
             self.songs['name'].append(song_name)
             # url
             song_url = 'https://music.163.com' + song.a['href']
             self.songs['url'].append(song_url)
 
-    def get_page(self, url):
-        """获得歌单列表"""
-        # 处理链接
-        url = re.sub('/#', '', url)
-
-        # 设置头
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36'
-        }
-        # 尝试获取
-        try:
-            response = requests.get(url, headers=headers)
-            if response.status_code == 200:
-                return response
-        except RequestException:
-            return None
 
     def songs_to_csv(self):
         """输出为csv"""
@@ -57,7 +44,7 @@ class Songs:
                                'song_name': self.songs['name'],
                                'song_url': self.songs['url'],
                                'song_lyric': self.songs['lyric']})
-        df.to_csv('plist.csv', index=False, sep=',', encoding='UTF-8')
+        df.to_csv(self.list_title + '.csv', index=False, sep=',', encoding='UTF-8')
 
     def get_lyric(self):
         """获得歌词"""
@@ -67,7 +54,7 @@ class Songs:
                   + song_id \
                   + '&lv=-1&kv=-1&tv=-1'
             # 获得歌词内容
-            content = self.get_page(url).json()
+            content = func.get_page(url).json()
             if 'lrc' in content:
                 lyric = content['lrc']['lyric']
                 # 清洗歌词
