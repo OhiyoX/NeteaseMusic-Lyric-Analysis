@@ -52,7 +52,7 @@ class Songs:
                 lyric = re.sub('\[.*?\]', '', lyric)
                 self.songs['lyric'].append(lyric)
                 self.only_lyric.append(lyric)
-                print('added lyric id:' + song_id)
+                print('added lyric id: ' + song_id)
             else:
                 # 填充，避免出现浮点数的空值
                 self.songs['lyric'].append('ThisShallBeIgnored')

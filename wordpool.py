@@ -19,7 +19,7 @@ class WordPool:
             with open(st.csv_fname + '.csv', encoding='UTF-8') as p:
                 songs = pandas.read_csv(p)
                 text = songs['song_lyric'].tolist()
-                print('You have ' + str(len(text)) + 'songs')
+                print('You have ' + str(len(text)) + ' songs')
                 lyrics = ' '.join(text)
         lyrics = re.sub('\\n|\[|:|\)', ' ', lyrics)
         self.word_pool = jieba.lcut(lyrics)
