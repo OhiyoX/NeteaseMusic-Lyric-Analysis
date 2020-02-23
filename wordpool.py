@@ -4,22 +4,22 @@ import jieba # 结巴分词
 from matplotlib import pyplot as plt # 数据可视化库
 import re
 import pandas
-from collections import Counter
 
 
 class WordPool:
     def __init__(self):
         self.word_pool = []
 
-    def get_word_pool(self, s=None):
+    def get_word_pool(self, st, s=None):
         """获得分词组"""
         if s is not None:
             lyrics = ' '.join(s.only_lyric)
         # 可以直接处理，这里为了与下载分离，使用导入文件的形式
         else:
-            with open('plist.csv', encoding='UTF-8') as p:
+            with open(st.csv_fname + '.csv', encoding='UTF-8') as p:
                 songs = pandas.read_csv(p)
                 text = songs['song_lyric'].tolist()
+                print('You have ' + str(len(text)) + 'songs')
                 lyrics = ' '.join(text)
         lyrics = re.sub('\\n|\[|:|\)', ' ', lyrics)
         self.word_pool = jieba.lcut(lyrics)
