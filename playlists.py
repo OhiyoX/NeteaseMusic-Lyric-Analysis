@@ -12,14 +12,13 @@ class Playlists(Songs):
 
     def get_playlists(self, st):
         try:
-            with open(st.search_keyword+'.json', encoding='UTF-8') as f:
+            with open('res/'+st.search_keyword+'.json', encoding='UTF-8') as f:
                 p_json = json.load(f)
         except FileNotFoundError:
-            # 保留前50项
             url = 'http://music.163.com/api/search/get/web?csrf_token=hlpretag=&hlposttag=&s={' \
                   + st.search_keyword + '}&type=1000&offset=0&total=true&limit=' + str(st.result_limit)
             p_json = func.get_page(url).json()
-            with open(st.search_keyword+'.json', 'w', encoding='UTF-8') as k:
+            with open('res/'+st.search_keyword+'.json', 'w', encoding='UTF-8') as k:
                 text = json.dumps(p_json, ensure_ascii=False)
                 k.write(text)
         result = p_json['result']

@@ -3,6 +3,7 @@ from requests.exceptions import RequestException
 import re
 import pandas
 
+
 def get_page(url):
     """获得网页"""
     # 处理链接
@@ -33,4 +34,15 @@ def songs_to_csv(songs, st):
                            'song_name': songs['name'],
                            'song_url': songs['url'],
                            'song_lyric': songs['lyric']})
-    df.to_csv(st.csv_fname + '.csv', index=False, sep=',', encoding='UTF-8')
+    df.to_csv('res/' + st.csv_fname + '.csv', index=False, sep=',', encoding='UTF-8')
+
+
+def make_filter(word_pool, stoplist):
+    # 注意大小写不敏感
+    new_word_pool = []
+    for word in word_pool:
+        l_word = word.lower()
+        if l_word not in stoplist:
+            if l_word == 'doo': print('found doo')
+            new_word_pool.append(l_word)
+    return new_word_pool
