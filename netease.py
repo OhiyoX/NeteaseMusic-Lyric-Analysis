@@ -10,8 +10,12 @@ def search_and_save():
     # 获得前50项歌单
     pls.get_playlists(st)
 
-    # 递归下载歌单
-    pls.recur_playlists(st)
+    try:
+        with open(st.csv_fname + '.csv') as f:
+            pass
+    except FileNotFoundError:
+        # 递归下载歌单
+        pls.recur_playlists(st)
 
 
 def single_playlist(w):
@@ -24,9 +28,6 @@ def single_playlist(w):
         s.get_plist(st.playlist_url, st)
         s.get_lyric()
         func.songs_to_csv(s.songs, st)
-
-    w.get_word_pool(st)
-    w.make_wordcloud()
 
 
 

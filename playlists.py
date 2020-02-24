@@ -1,6 +1,5 @@
 import functions as func
 import json
-import pandas
 from songs import Songs
 import time
 
@@ -31,6 +30,7 @@ class Playlists(Songs):
         for playlist in self.playlists:
             url = 'https://music.163.com/#/playlist?id=' + str(playlist['id'])
             self.get_plist(url, st)
-            self.get_lyric()
-            time.sleep(5)
+            print('completed ' + str(self.playlists.index(playlist) / len(self.playlists) * 100) + '%')
+            time.sleep(2)
+        self.get_lyric()
         func.songs_to_csv(self.songs, st)

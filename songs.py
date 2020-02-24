@@ -13,7 +13,7 @@ class Songs:
         self.only_lyric = []
 
     def get_plist(self, url, st):
-        # 建立歌单:name与url
+        # 建立歌单
         content = func.get_page(url).text
         # 新建bs对象
         soup = BeautifulSoup(content, 'lxml')
@@ -40,18 +40,20 @@ class Songs:
     def get_lyric(self):
         """获得歌词"""
         self.songs['lyric'] = []
+        total = len(self.songs['id'])
         for song_id in self.songs['id']:
             url = 'http://music.163.com/api/song/lyric?os=pc&id=' \
                   + song_id \
                   + '&lv=-1&kv=-1&tv=-1'
             # 获得歌词内容
             content = func.get_page(url).json()
-            if 'lrc' in content and 'nolyric' not in content:
+            if 'lrc' in content and 'nolyric' not in content and content['lrc'] is not None:
                 lyric = content['lrc']['lyric']
                 # 清洗歌词
                 lyric = re.sub('\[.*?\]', '', lyric)
                 self.songs['lyric'].append(lyric)
                 self.only_lyric.append(lyric)
+                print('completed ' + str(round(self.songs['id'].index(song_id) / total * 100, 2)) + '% ', end='')
                 print('added lyric id: ' + song_id)
             else:
                 # 填充，避免出现浮点数的空值
