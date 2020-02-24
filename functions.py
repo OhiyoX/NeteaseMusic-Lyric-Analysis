@@ -43,6 +43,5 @@ def make_filter(word_pool, stoplist):
     for word in word_pool:
         l_word = word.lower()
         if l_word not in stoplist:
-            if l_word == 'doo': print('found doo')
             new_word_pool.append(l_word)
     return new_word_pool
