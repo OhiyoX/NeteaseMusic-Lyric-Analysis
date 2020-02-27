@@ -59,8 +59,8 @@ class WordPool:
                 foo.append(word)
         freq = Counter(foo).most_common(len(self.new_word_pool))
         w1, w2, n1, n2 = [], [], [], []
-        for i in range(20):
-            if i < 10:
+        for i in range(st.num):
+            if i < (st.num/2):
                 w1.append(freq[i][0])
                 n1.append(freq[i][1])
             else:

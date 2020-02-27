@@ -3,6 +3,7 @@ from playlists import Playlists
 from wordpool import WordPool
 from settings import Settings
 import functions as func
+import os
 
 
 def search_and_save():
@@ -10,19 +11,13 @@ def search_and_save():
     # 获得前50项歌单
     pls.get_playlists(st)
 
-    try:
-        with open('res/' + st.csv_fname + '.csv') as f:
-            pass
-    except FileNotFoundError:
+    if not os.path.exists('res/' + st.csv_fname + '.csv'):
         # 递归下载歌单
         pls.recur_playlists(st)
 
 
 def single_playlist():
-    try:
-        with open('res/' + st.csv_fname + '.csv') as p:
-            pass
-    except FileNotFoundError:
+    if not os.path.exists('res/' + st.csv_fname + '.csv'):
         # 新建一个歌单类
         s = Songs()
         s.get_plist(st.playlist_url, st)
