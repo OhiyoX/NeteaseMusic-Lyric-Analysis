@@ -1,3 +1,4 @@
+#pip install bs4
 from bs4 import BeautifulSoup
 import re
 import functions as func

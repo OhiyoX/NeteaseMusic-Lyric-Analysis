@@ -1,3 +1,4 @@
+# pip install requests pandas
 import requests
 from requests.exceptions import RequestException
 import re

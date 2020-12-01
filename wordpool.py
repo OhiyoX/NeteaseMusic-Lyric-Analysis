@@ -1,3 +1,4 @@
+#pip install wordcloud pkuseg matplotlib tabulate
 from wordcloud import WordCloud  # 词云
 import pkuseg  # 结巴分词
 from matplotlib import pyplot as plt  # 数据可视化库
@@ -41,7 +42,7 @@ class WordPool:
         # 根据词频生成词云
         plt.figure(figsize=(16, 20), dpi=200)
         wordcloud = WordCloud(
-            font_path="FZYouHK_506L.TTF",
+            font_path="FZYouHK_506L.TTF", # 没有字体文件就去掉该行
             background_color="white",
             width=1600,
             height=2000,
