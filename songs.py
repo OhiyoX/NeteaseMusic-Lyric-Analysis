@@ -1,4 +1,4 @@
-#pip install bs4
+#pip install bs4 lxml
 from bs4 import BeautifulSoup
 import re
 import functions as func

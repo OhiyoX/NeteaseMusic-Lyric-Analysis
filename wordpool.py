@@ -42,7 +42,7 @@ class WordPool:
         # 根据词频生成词云
         plt.figure(figsize=(16, 20), dpi=200)
         wordcloud = WordCloud(
-            font_path="FZYouHK_506L.TTF", # 没有字体文件就去掉该行
+            font_path="FZYouHK_506L.TTF", # 没有字体文件就替换为其他中文字体路径
             background_color="white",
             width=1600,
             height=2000,
