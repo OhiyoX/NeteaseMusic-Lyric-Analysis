@@ -1,2 +1,3 @@
-*.TTF
 __pycache__/
+*/*.csv
+*/*.png
